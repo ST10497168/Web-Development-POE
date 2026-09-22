@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lookbook — Fresh</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -13,8 +13,8 @@
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="lookbook.html" aria-current="page">Lookbook</a></li>
+        <li><a href="Shop.html">Shop</a></li>
+        <li><a href="Lookbook.html" aria-current="page">Lookbook</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </nav>
@@ -22,6 +22,9 @@
       <a href="#" aria-label="Account">Account</a>
       <a href="#" aria-label="Cart">Cart (0)</a>
     </div>
+    <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <section class="hero" style="padding-bottom:3rem;">
@@ -30,6 +33,7 @@
       <h1>Lookbook</h1>
       <p>Seasonal edits, styling ideas, and the stories behind the drops.</p>
     </div>
+    <img class="hero-art" src="images/campaign-collage.svg" alt="Utility streetwear collage featuring cargo trousers, a bucket hat, and a track jacket" width="1200" height="800" loading="eager">
   </section>
 
   <section>
@@ -38,10 +42,10 @@
       <span class="tag">Editorial</span>
     </div>
     <div class="editorial-grid">
-      <div class="thumb wide">Editorial photo placeholder<br>Street style, layered outfit</div>
-      <div class="thumb">Editorial photo placeholder</div>
-      <div class="thumb">Editorial photo placeholder</div>
-      <div class="thumb">Editorial photo placeholder</div>
+      <img class="thumb wide art-editorial" src="images/campaign-collage.svg" alt="Utility streetwear campaign collage" width="1200" height="800" loading="lazy">
+      <img class="thumb art-editorial" src="images/jacket.svg" alt="Track jacket illustration" width="800" height="1000" loading="lazy">
+      <img class="thumb art-editorial" src="images/cargo.svg" alt="Cargo pants illustration" width="800" height="1000" loading="lazy">
+      <img class="thumb art-editorial" src="images/tee-detail.svg" alt="Oversized tee detail illustration" width="800" height="1000" loading="lazy">
     </div>
   </section>
 
@@ -52,21 +56,21 @@
     </div>
     <div class="grid">
       <article class="card">
-        <div class="thumb">Journal photo placeholder</div>
+        <img class="art-thumb" src="images/jacket.svg" alt="Track jacket style illustration" width="800" height="1000" loading="lazy">
         <div class="card-body">
           <h3>Three ways to wear the track jacket</h3>
           <p class="price">Style guide</p>
         </div>
       </article>
       <article class="card">
-        <div class="thumb">Journal photo placeholder</div>
+        <img class="art-thumb" src="images/brand.svg" alt="Fresh brand story artwork" width="1000" height="750" loading="lazy">
         <div class="card-body">
           <h3>Behind the black &amp; yellow</h3>
           <p class="price">Brand story</p>
         </div>
       </article>
       <article class="card">
-        <div class="thumb">Journal photo placeholder</div>
+        <img class="art-thumb" src="images/community.svg" alt="Fresh community style artwork" width="600" height="600" loading="lazy">
         <div class="card-body">
           <h3>This month's #StayFresh picks</h3>
           <p class="price">Community</p>
@@ -81,22 +85,23 @@
       <span class="tag">Tag us to be featured</span>
     </div>
     <div class="hashtag-strip">
-      <div class="thumb">Community photo</div>
-      <div class="thumb">Community photo</div>
-      <div class="thumb">Community photo</div>
-      <div class="thumb">Community photo</div>
+      <img class="art-community" src="images/community.svg" alt="Fresh community style artwork" width="600" height="600" loading="lazy">
+      <img class="art-community" src="images/brand.svg" alt="Fresh brand artwork" width="1000" height="750" loading="lazy">
+      <img class="art-community" src="images/tee-detail.svg" alt="Fresh tee detail artwork" width="800" height="1000" loading="lazy">
+      <img class="art-community" src="images/editorial.svg" alt="Fresh editorial artwork" width="1200" height="800" loading="lazy">
     </div>
   </section>
 
   <footer class="site-footer">
     <p>&copy; 2026 Fresh. All rights reserved.</p>
     <nav class="footer-links">
-      <a href="shop.html">Shop</a>
-      <a href="lookbook.html">Lookbook</a>
+      <a href="Shop.html">Shop</a>
+      <a href="Lookbook.html">Lookbook</a>
       <a href="about.html">Contact</a>
       <a href="https://www.instagram.com/">Instagram</a>
     </nav>
   </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>
