@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Track Jacket — Fresh</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Oversized Logo Tee — Fresh</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
   <header class="site-header">
     <a href="index.html" class="logo">Fresh</a>
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html" aria-current="page">Shop</a></li>
-        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="Shop.html" aria-current="page">Shop</a></li>
+        <li><a href="Lookbook.html">Lookbook</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </nav>
@@ -22,74 +21,43 @@
       <a href="#" aria-label="Account">Account</a>
       <a href="#" aria-label="Cart">Cart (0)</a>
     </div>
+    <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <section>
     <div class="product-layout">
       <div class="product-gallery">
-        <div class="thumb">Photo placeholder<br>Track jacket — front, yellow trim</div>
-        <div class="thumb">Photo placeholder<br>Back detail</div>
-        <div class="thumb">Photo placeholder<br>Fabric close-up</div>
+        <img class="thumb art-product" src="images/tee.svg" alt="Black oversized logo tee" width="800" height="1000" loading="eager">
+        <img class="thumb art-product" src="images/tee-detail.svg" alt="Oversized tee detail" width="800" height="1000" loading="lazy">
+        <img class="thumb art-product" src="images/brand.svg" alt="Fresh tee branding detail" width="1000" height="750" loading="lazy">
       </div>
-
       <div class="product-info">
-        <h1>Track jacket</h1>
-        <p class="price">R950</p>
-        <p class="desc">A boxy, oversized track jacket in heavyweight cotton, finished with a yellow zip and contrast trim. Built to layer over anything in the Fresh range.</p>
-
-        <p class="tag" style="margin-bottom:0.5rem;">Select size</p>
-        <div class="size-row">
-          <button type="button">S</button>
-          <button type="button">M</button>
-          <button type="button">L</button>
-          <button type="button">XL</button>
+        <h1>Oversized logo tee</h1>
+        <p class="price">R450</p>
+        <p class="desc">A relaxed-fit cotton tee with the signature Fresh logo. Easy to style, built for everyday wear.</p>
+        <h3>Choose a size</h3>
+        <div class="size-row" aria-label="Choose a size">
+          <button type="button" aria-pressed="false">S</button>
+          <button type="button" aria-pressed="true">M</button>
+          <button type="button" aria-pressed="false">L</button>
+          <button type="button" aria-pressed="false">XL</button>
         </div>
-
-        <a href="#" class="btn" style="margin-bottom:0.75rem; display:block; text-align:center;">Add to cart</a>
-        <a href="#" class="btn btn-outline" style="display:block; text-align:center;">Add to wishlist</a>
+        <button type="button" class="btn">Add to cart</button>
       </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head">
-      <h2>Complete the look</h2>
-      <span class="tag">Styled with this</span>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <div class="thumb">Photo placeholder<br>Cargo pants — black</div>
-        <div class="card-body">
-          <h3>Cargo pants</h3>
-          <p class="price">R780</p>
-        </div>
-      </article>
-      <article class="card">
-        <div class="thumb">Photo placeholder<br>Bucket hat — yellow</div>
-        <div class="card-body">
-          <h3>Bucket hat</h3>
-          <p class="price">R280</p>
-        </div>
-      </article>
-      <article class="card">
-        <div class="thumb">Photo placeholder<br>Chunky sneakers</div>
-        <div class="card-body">
-          <h3>Chunky sneakers</h3>
-          <p class="price">R1,450</p>
-        </div>
-      </article>
     </div>
   </section>
 
   <footer class="site-footer">
     <p>&copy; 2026 Fresh. All rights reserved.</p>
     <nav class="footer-links">
-      <a href="shop.html">Shop</a>
-      <a href="lookbook.html">Lookbook</a>
+      <a href="Shop.html">Shop</a>
+      <a href="Lookbook.html">Lookbook</a>
       <a href="about.html">Contact</a>
       <a href="https://www.instagram.com/">Instagram</a>
     </nav>
   </footer>
-
+  <script src="script.js" defer></script>
 </body>
 </html>
