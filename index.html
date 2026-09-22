@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fresh — Style for All</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -13,8 +13,8 @@
     <nav class="main-nav">
       <ul>
         <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="Shop.html">Shop</a></li>
+        <li><a href="Lookbook.html">Lookbook</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </nav>
@@ -22,6 +22,9 @@
       <a href="#" aria-label="Account">Account</a>
       <a href="#" aria-label="Cart">Cart (0)</a>
     </div>
+    <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <section class="hero">
@@ -29,8 +32,9 @@
     <div class="hero-content">
       <h1>Style for all</h1>
       <p>Bold, versatile clothing for people who want their look to say something — without overthinking it.</p>
-      <a href="shop.html" class="btn">Shop now</a>
+      <a href="Shop.html" class="btn">Shop now</a>
     </div>
+    <img class="hero-art" src="images/hero.svg" alt="Abstract Fresh streetwear artwork" width="1600" height="900" loading="eager">
   </section>
 
   <section>
@@ -40,28 +44,28 @@
     </div>
     <div class="grid">
       <article class="card">
-        <div class="thumb">Photo placeholder<br>Oversized tee — black</div>
+        <img class="art-thumb" src="images/tee.svg" alt="Black oversized logo tee illustration" width="800" height="1000" loading="lazy">
         <div class="card-body">
           <h3>Oversized logo tee</h3>
           <p class="price">R450</p>
         </div>
       </article>
       <article class="card">
-        <div class="thumb">Photo placeholder<br>Track jacket — yellow trim</div>
+        <img class="art-thumb" src="images/jacket.svg" alt="Black track jacket with yellow trim illustration" width="800" height="1000" loading="lazy">
         <div class="card-body">
           <h3>Track jacket</h3>
           <p class="price">R950</p>
         </div>
       </article>
       <article class="card">
-        <div class="thumb">Photo placeholder<br>Cargo pants — black</div>
+        <img class="art-thumb" src="images/cargo.svg" alt="Black cargo pants illustration" width="800" height="1000" loading="lazy">
         <div class="card-body">
           <h3>Cargo pants</h3>
           <p class="price">R780</p>
         </div>
       </article>
       <article class="card">
-        <div class="thumb">Photo placeholder<br>Bucket hat — yellow</div>
+        <img class="art-thumb" src="images/hat.svg" alt="Yellow bucket hat illustration" width="800" height="1000" loading="lazy">
         <div class="card-body">
           <h3>Bucket hat</h3>
           <p class="price">R280</p>
@@ -76,22 +80,23 @@
       <span class="tag">Tag us to be featured</span>
     </div>
     <div class="hashtag-strip">
-      <div class="thumb">Community photo</div>
-      <div class="thumb">Community photo</div>
-      <div class="thumb">Community photo</div>
-      <div class="thumb">Community photo</div>
+      <img class="art-community" src="images/community.svg" alt="Fresh community style artwork" width="600" height="600" loading="lazy">
+      <img class="art-community" src="images/brand.svg" alt="Fresh brand artwork" width="1000" height="750" loading="lazy">
+      <img class="art-community" src="images/tee-detail.svg" alt="Fresh tee detail artwork" width="800" height="1000" loading="lazy">
+      <img class="art-community" src="images/editorial.svg" alt="Fresh editorial artwork" width="1200" height="800" loading="lazy">
     </div>
   </section>
 
   <footer class="site-footer">
     <p>&copy; 2026 Fresh. All rights reserved.</p>
     <nav class="footer-links">
-      <a href="shop.html">Shop</a>
-      <a href="lookbook.html">Lookbook</a>
+      <a href="Shop.html">Shop</a>
+      <a href="Lookbook.html">Lookbook</a>
       <a href="about.html">Contact</a>
       <a href="https://www.instagram.com/">Instagram</a>
     </nav>
   </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>
