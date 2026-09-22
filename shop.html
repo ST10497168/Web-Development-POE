@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop — Fresh</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Lookbook — Fresh</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -13,8 +13,8 @@
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html" aria-current="page">Shop</a></li>
-        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="Shop.html">Shop</a></li>
+        <li><a href="Lookbook.html" aria-current="page">Lookbook</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </nav>
@@ -22,103 +22,86 @@
       <a href="#" aria-label="Account">Account</a>
       <a href="#" aria-label="Cart">Cart (0)</a>
     </div>
+    <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
+
+  <section class="hero" style="padding-bottom:3rem;">
+    <div class="hero-slash" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1>Lookbook</h1>
+      <p>Seasonal edits, styling ideas, and the stories behind the drops.</p>
+    </div>
+    <img class="hero-art" src="images/campaign-collage.svg" alt="Utility streetwear collage featuring cargo trousers, a bucket hat, and a track jacket" width="1200" height="800" loading="eager">
+  </section>
 
   <section>
     <div class="section-head">
-      <h2>Shop</h2>
-      <span class="tag">24 items</span>
+      <h2>Autumn edit</h2>
+      <span class="tag">Editorial</span>
     </div>
+    <div class="editorial-grid">
+      <img class="thumb wide art-editorial" src="images/campaign-collage.svg" alt="Utility streetwear campaign collage" width="1200" height="800" loading="lazy">
+      <img class="thumb art-editorial" src="images/jacket.svg" alt="Track jacket illustration" width="800" height="1000" loading="lazy">
+      <img class="thumb art-editorial" src="images/cargo.svg" alt="Cargo pants illustration" width="800" height="1000" loading="lazy">
+      <img class="thumb art-editorial" src="images/tee-detail.svg" alt="Oversized tee detail illustration" width="800" height="1000" loading="lazy">
+    </div>
+  </section>
 
-    <div class="shop-layout">
-      <aside class="filters">
-        <h3>Category</h3>
-        <label><input type="checkbox"> Men</label>
-        <label><input type="checkbox"> Women</label>
-        <label><input type="checkbox"> Accessories</label>
-        <label><input type="checkbox"> New arrivals</label>
-        <label><input type="checkbox"> Sale</label>
+  <section>
+    <div class="section-head">
+      <h2>Style journal</h2>
+      <span class="tag">Latest reads</span>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <img class="art-thumb" src="images/jacket.svg" alt="Track jacket style illustration" width="800" height="1000" loading="lazy">
+        <div class="card-body">
+          <h3>Three ways to wear the track jacket</h3>
+          <p class="price">Style guide</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="art-thumb" src="images/brand.svg" alt="Fresh brand story artwork" width="1000" height="750" loading="lazy">
+        <div class="card-body">
+          <h3>Behind the black &amp; yellow</h3>
+          <p class="price">Brand story</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="art-thumb" src="images/community.svg" alt="Fresh community style artwork" width="600" height="600" loading="lazy">
+        <div class="card-body">
+          <h3>This month's #StayFresh picks</h3>
+          <p class="price">Community</p>
+        </div>
+      </article>
+    </div>
+  </section>
 
-        <h3>Size</h3>
-        <label><input type="checkbox"> S</label>
-        <label><input type="checkbox"> M</label>
-        <label><input type="checkbox"> L</label>
-        <label><input type="checkbox"> XL</label>
-
-        <h3>Price</h3>
-        <label><input type="checkbox"> Under R500</label>
-        <label><input type="checkbox"> R500–R1000</label>
-        <label><input type="checkbox"> R1000+</label>
-      </aside>
-
-      <div class="grid">
-        <article class="card">
-          <a href="product.html">
-            <div class="thumb">Photo placeholder<br>Oversized tee — black</div>
-          </a>
-          <div class="card-body">
-            <h3><a href="product.html">Oversized logo tee</a></h3>
-            <p class="price">R450</p>
-          </div>
-        </article>
-        <article class="card">
-          <a href="product.html">
-            <div class="thumb">Photo placeholder<br>Track jacket — yellow trim</div>
-          </a>
-          <div class="card-body">
-            <h3><a href="product.html">Track jacket</a></h3>
-            <p class="price">R950</p>
-          </div>
-        </article>
-        <article class="card">
-          <a href="product.html">
-            <div class="thumb">Photo placeholder<br>Cargo pants — black</div>
-          </a>
-          <div class="card-body">
-            <h3><a href="product.html">Cargo pants</a></h3>
-            <p class="price">R780</p>
-          </div>
-        </article>
-        <article class="card">
-          <a href="product.html">
-            <div class="thumb">Photo placeholder<br>Bucket hat — yellow</div>
-          </a>
-          <div class="card-body">
-            <h3><a href="product.html">Bucket hat</a></h3>
-            <p class="price">R280</p>
-          </div>
-        </article>
-        <article class="card">
-          <a href="product.html">
-            <div class="thumb">Photo placeholder<br>Ribbed knit top</div>
-          </a>
-          <div class="card-body">
-            <h3><a href="product.html">Ribbed knit top</a></h3>
-            <p class="price">R520</p>
-          </div>
-        </article>
-        <article class="card">
-          <a href="product.html">
-            <div class="thumb">Photo placeholder<br>Chunky sneakers</div>
-          </a>
-          <div class="card-body">
-            <h3><a href="product.html">Chunky sneakers</a></h3>
-            <p class="price">R1,450</p>
-          </div>
-        </article>
-      </div>
+  <section>
+    <div class="section-head">
+      <h2>#StayFresh</h2>
+      <span class="tag">Tag us to be featured</span>
+    </div>
+    <div class="hashtag-strip">
+      <img class="art-community" src="images/community.svg" alt="Fresh community style artwork" width="600" height="600" loading="lazy">
+      <img class="art-community" src="images/brand.svg" alt="Fresh brand artwork" width="1000" height="750" loading="lazy">
+      <img class="art-community" src="images/tee-detail.svg" alt="Fresh tee detail artwork" width="800" height="1000" loading="lazy">
+      <img class="art-community" src="images/editorial.svg" alt="Fresh editorial artwork" width="1200" height="800" loading="lazy">
     </div>
   </section>
 
   <footer class="site-footer">
     <p>&copy; 2026 Fresh. All rights reserved.</p>
     <nav class="footer-links">
-      <a href="shop.html">Shop</a>
-      <a href="lookbook.html">Lookbook</a>
+      <a href="Shop.html">Shop</a>
+      <a href="Lookbook.html">Lookbook</a>
       <a href="about.html">Contact</a>
       <a href="https://www.instagram.com/">Instagram</a>
     </nav>
   </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>
