@@ -1,0 +1,375 @@
+// Fresh — script.js
+// Vanilla JS, no dependencies. Sections:
+//   1. Toast notifications (reusable showToast helper)
+//   2. Cart + wishlist state (saved in localStorage)
+//   3. Mobile navigation toggle
+//   4. Page behaviours: quick-add, product page, contact form, copy hashtag
+
+(function () {
+  'use strict';
+
+  /* =====================================================
+     1. TOAST NOTIFICATIONS
+     showToast(message, { type, duration, actionLabel, onAction })
+     type: 'success' | 'error' | 'info'
+     ===================================================== */
+  var MAX_TOASTS = 3;
+  var region = null;
+
+  function getRegion() {
+    if (region) return region;
+    region = document.createElement('div');
+    region.className = 'toast-region';
+    // polite live region so screen readers announce toasts without interrupting
+    region.setAttribute('role', 'status');
+    region.setAttribute('aria-live', 'polite');
+    document.body.appendChild(region);
+    return region;
+  }
+
+  function showToast(message, options) {
+    options = options || {};
+    var type = options.type || 'info';
+    var duration = options.duration || 4000;
+    var container = getRegion();
+
+    // keep the stack small: drop the oldest toast if we're at the limit
+    while (container.children.length >= MAX_TOASTS) {
+      container.removeChild(container.firstChild);
+    }
+
+    var toast = document.createElement('div');
+    toast.className = 'toast toast--' + type;
+
+    var text = document.createElement('span');
+    text.className = 'toast__message';
+    text.textContent = message;
+    toast.appendChild(text);
+
+    if (options.actionLabel && typeof options.onAction === 'function') {
+      var action = document.createElement('button');
+      action.type = 'button';
+      action.className = 'toast__action';
+      action.textContent = options.actionLabel;
+      action.addEventListener('click', function () {
+        options.onAction();
+        dismiss();
+      });
+      toast.appendChild(action);
+    }
+
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'toast__close';
+    close.setAttribute('aria-label', 'Dismiss notification');
+    close.textContent = '×';
+    close.addEventListener('click', function () { dismiss(); });
+    toast.appendChild(close);
+
+    var timer = null;
+    var dismissed = false;
+
+    function startTimer() { timer = setTimeout(dismiss, duration); }
+    function stopTimer() { clearTimeout(timer); }
+
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      stopTimer();
+      toast.classList.remove('is-visible');
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 250);
+    }
+
+    // pause the countdown while the user hovers or tabs into the toast
+    toast.addEventListener('mouseenter', stopTimer);
+    toast.addEventListener('mouseleave', function () { if (!dismissed) startTimer(); });
+    toast.addEventListener('focusin', stopTimer);
+    toast.addEventListener('focusout', function () { if (!dismissed) startTimer(); });
+
+    container.appendChild(toast);
+    // next frame so the CSS transition runs
+    requestAnimationFrame(function () { toast.classList.add('is-visible'); });
+    startTimer();
+
+    return { dismiss: dismiss };
+  }
+
+  // expose for use in the browser console and other scripts
+  window.showToast = showToast;
+
+  /* =====================================================
+     2. CART + WISHLIST STATE
+     Saved in localStorage so counts survive page changes.
+     Everything is wrapped in try/catch: storage can be blocked
+     (private windows, strict settings) and the site must still work.
+     ===================================================== */
+  var CART_KEY = 'fresh_cart';
+  var WISH_KEY = 'fresh_wishlist';
+
+  function load(key) {
+    try {
+      var data = JSON.parse(localStorage.getItem(key));
+      return Array.isArray(data) ? data : [];
+    } catch (e) { return []; }
+  }
+
+  function save(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* ignore */ }
+  }
+
+  var cart = load(CART_KEY);
+  var wishlist = load(WISH_KEY);
+
+  function cartLink() {
+    return document.querySelector('.nav-icons a[aria-label="Cart"]');
+  }
+
+  function updateCartCount() {
+    var link = cartLink();
+    if (link) link.textContent = 'Cart (' + cart.length + ')';
+  }
+
+  function addToCart(item) {
+    cart.push(item);
+    save(CART_KEY, cart);
+    updateCartCount();
+  }
+
+  function removeLastFromCart() {
+    cart.pop();
+    save(CART_KEY, cart);
+    updateCartCount();
+  }
+
+  /* =====================================================
+     3. DOM READY
+     ===================================================== */
+  document.addEventListener('DOMContentLoaded', function () {
+    updateCartCount();
+    setupNav();
+    setupPlaceholderLinks();
+    setupQuickAdd();
+    setupProductPage();
+    setupContactForm();
+    setupCopyButtons();
+  });
+
+  /* ---- Mobile navigation toggle ---- */
+  function setupNav() {
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.querySelector('.main-nav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', function () {
+      var isOpen = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // close the mobile menu if the window is resized back up to desktop
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 600 && nav.classList.contains('is-open')) {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ---- Header links that don't have a page yet (Account, Cart) ----
+     Stops the page jumping to the top and tells the user what's happening. */
+  function setupPlaceholderLinks() {
+    var links = document.querySelectorAll('.nav-icons a[href="#"]');
+    links.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        var label = link.getAttribute('aria-label');
+        if (label === 'Cart') {
+          var n = cart.length;
+          showToast(n === 0 ? 'Your cart is empty.' :
+            'You have ' + n + (n === 1 ? ' item' : ' items') + ' in your cart. Checkout is coming soon.',
+            { type: 'info' });
+        } else {
+          showToast('Accounts are coming soon.', { type: 'info' });
+        }
+      });
+    });
+  }
+
+  /* ---- Quick add buttons on product cards (home, shop, complete the look) ----
+     Cards that show a price in rand get a "Quick add" button injected,
+     so the HTML for each card doesn't need changing. */
+  function setupQuickAdd() {
+    var cards = document.querySelectorAll('.card');
+    cards.forEach(function (card) {
+      var body = card.querySelector('.card-body');
+      var nameEl = card.querySelector('h3');
+      var priceEl = card.querySelector('.price');
+      if (!body || !nameEl || !priceEl) return;
+
+      var price = priceEl.textContent.trim();
+      if (!/^R\s?[\d,]+/.test(price)) return; // skips lookbook labels like "Style guide"
+
+      var name = nameEl.textContent.trim();
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'btn btn-small quick-add';
+      button.textContent = 'Quick add';
+      button.setAttribute('aria-label', 'Quick add ' + name + ' to cart');
+
+      button.addEventListener('click', function () {
+        addToCart({ name: name, price: price });
+        showToast(name + ' added to your cart.', {
+          type: 'success',
+          actionLabel: 'Undo',
+          onAction: function () {
+            removeLastFromCart();
+            showToast('Removed ' + name + '.', { type: 'info', duration: 2500 });
+          }
+        });
+      });
+
+      body.appendChild(button);
+    });
+  }
+
+  /* ---- Product page: size selector, add to cart, wishlist ---- */
+  function setupProductPage() {
+    var sizeButtons = document.querySelectorAll('.size-row button');
+    var addButton = document.getElementById('add-to-cart');
+    var wishButton = document.getElementById('add-to-wishlist');
+
+    sizeButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        sizeButtons.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+        button.setAttribute('aria-pressed', 'true');
+      });
+    });
+
+    function productName() {
+      var h1 = document.querySelector('.product-info h1');
+      return h1 ? h1.textContent.trim() : 'Item';
+    }
+
+    function productPrice() {
+      var p = document.querySelector('.product-info .price');
+      return p ? p.textContent.trim() : '';
+    }
+
+    function selectedSize() {
+      var chosen = document.querySelector('.size-row button[aria-pressed="true"]');
+      return chosen ? chosen.textContent.trim() : null;
+    }
+
+    if (addButton) {
+      addButton.addEventListener('click', function () {
+        var size = selectedSize();
+        if (!size) {
+          showToast('Please select a size first.', { type: 'error' });
+          return;
+        }
+        var name = productName();
+        addToCart({ name: name, price: productPrice(), size: size });
+        showToast(name + ' (size ' + size + ') added to your cart.', {
+          type: 'success',
+          actionLabel: 'Undo',
+          onAction: function () {
+            removeLastFromCart();
+            showToast('Removed ' + name + '.', { type: 'info', duration: 2500 });
+          }
+        });
+      });
+    }
+
+    if (wishButton) {
+      wishButton.addEventListener('click', function () {
+        var name = productName();
+        var index = wishlist.indexOf(name);
+        if (index === -1) {
+          wishlist.push(name);
+          wishButton.textContent = 'Saved to wishlist';
+          showToast(name + ' saved to your wishlist.', { type: 'success' });
+        } else {
+          wishlist.splice(index, 1);
+          wishButton.textContent = 'Add to wishlist';
+          showToast(name + ' removed from your wishlist.', { type: 'info' });
+        }
+        save(WISH_KEY, wishlist);
+      });
+
+      // reflect saved state when the page loads
+      if (wishlist.indexOf(productName()) !== -1) {
+        wishButton.textContent = 'Saved to wishlist';
+      }
+    }
+  }
+
+  /* ---- Contact form: validate, then confirm with a toast ---- */
+  function setupContactForm() {
+    var form = document.querySelector('.contact-form');
+    if (!form) return;
+
+    form.setAttribute('novalidate', ''); // we show our own messages instead of the browser's
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setInvalid(field, isInvalid) {
+      if (isInvalid) field.setAttribute('aria-invalid', 'true');
+      else field.removeAttribute('aria-invalid');
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      var name = form.querySelector('#name');
+      var email = form.querySelector('#email');
+      var message = form.querySelector('#message');
+
+      [name, email, message].forEach(function (f) { if (f) setInvalid(f, false); });
+
+      if (name && !name.value.trim()) {
+        setInvalid(name, true);
+        name.focus();
+        showToast('Please enter your name.', { type: 'error' });
+        return;
+      }
+      if (email && !emailPattern.test(email.value.trim())) {
+        setInvalid(email, true);
+        email.focus();
+        showToast('Please enter a valid email address.', { type: 'error' });
+        return;
+      }
+      if (message && message.value.trim().length < 10) {
+        setInvalid(message, true);
+        message.focus();
+        showToast('Your message should be at least 10 characters.', { type: 'error' });
+        return;
+      }
+
+      // There is no server behind this static site, so nothing is actually sent.
+      showToast('Thanks ' + name.value.trim() + '! Your message has been received.', {
+        type: 'success',
+        duration: 5000
+      });
+      form.reset();
+    });
+  }
+
+  /* ---- Copy buttons: any <button data-copy="text"> copies that text ---- */
+  function setupCopyButtons() {
+    var buttons = document.querySelectorAll('[data-copy]');
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var text = button.getAttribute('data-copy');
+
+        function done() { showToast('Copied ' + text + ' to your clipboard.', { type: 'success' }); }
+        function fail() { showToast('Could not copy. Please copy ' + text + ' manually.', { type: 'error' }); }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, fail);
+        } else {
+          fail();
+        }
+      });
+    });
+  }
+})();
