@@ -1,0 +1,553 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap');
+ 
+/* =========================================================
+   2.2 BASE STYLE / CSS RESET
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+ 
+html { -webkit-text-size-adjust: 100%; }
+ 
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+ 
+input, button, textarea, select { font: inherit; }
+ 
+ul, ol { list-style: none; }
+ 
+a { color: inherit; text-decoration: none; }
+ 
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+:root {
+  --black: #0b0b0a;
+  --yellow: #f2c310;
+  --cream: #faf9f4;
+  --gray: #6b6b66;
+  --line: #e4e2d8;
+ 
+  /* spacing scale (rem-based, relative units) */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+ 
+  /* fluid typography scale */
+  --step-0: 1rem;
+  --step-1: clamp(1.125rem, 1rem + 0.5vw, 1.35rem);
+  --step-2: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  --step-3: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --step-4: clamp(2.75rem, 1.8rem + 4vw, 5.5rem);
+}
+ 
+/* =========================================================
+   BASE
+   ========================================================= */
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--step-0);
+  background: var(--cream);
+  color: var(--black);
+  line-height: 1.5;
+}
+ 
+h1, h2, h3, .display {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+ 
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); font-family: 'Inter', sans-serif; font-weight: 700; text-transform: none; }
+ 
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+ 
+/* =========================================================
+   HEADER  (Flexbox layout)
+   ========================================================= */
+header.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 5%;
+  border-bottom: 3px solid var(--black);
+  background: var(--cream);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+ 
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: var(--step-2);
+  background: var(--black);
+  color: var(--yellow);
+  padding: 0.15em 0.5em;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+ 
+nav.main-nav ul {
+  display: flex;
+  gap: var(--space-md);
+}
+ 
+nav.main-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+ 
+nav.main-nav a:hover,
+nav.main-nav a:focus-visible,
+nav.main-nav a[aria-current="page"] {
+  border-bottom-color: var(--yellow);
+}
+ 
+nav.main-nav a:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 3px;
+}
+ 
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+ 
+.nav-icons a:hover,
+.nav-icons a:focus-visible { color: var(--gray); }
+ 
+/* Hamburger button — hidden on desktop, shown on mobile (see breakpoints) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--black);
+  background: var(--cream);
+  cursor: pointer;
+}
+ 
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--black);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+ 
+.nav-toggle:hover,
+.nav-toggle:focus-visible { background: var(--yellow); }
+ 
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+ 
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: var(--space-xl) 5% 5rem;
+  overflow: hidden;
+  border-bottom: 3px solid var(--black);
+  display: grid;
+  grid-template-areas: "content";
+  align-items: center;
+}
+ 
+.hero-slash {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 55%;
+  height: 160%;
+  background: var(--yellow);
+  transform: rotate(-8deg);
+  z-index: 0;
+}
+ 
+.hero-content {
+  grid-area: content;
+  position: relative;
+  z-index: 1;
+  max-width: 40ch;
+}
+ 
+.hero-content p {
+  font-size: var(--step-1);
+  max-width: 30ch;
+  margin-bottom: var(--space-md);
+  color: var(--gray);
+}
+ 
+/* =========================================================
+   BUTTONS  (pseudo-classes: hover / focus / active)
+   ========================================================= */
+.btn {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  background: var(--black);
+  color: var(--cream);
+  padding: 0.9rem 2rem;
+  border: 2px solid var(--black);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+ 
+.btn:hover { background: transparent; color: var(--black); }
+.btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--yellow); }
+.btn:active { transform: translateY(1px); }
+ 
+.btn-outline { background: transparent; color: var(--black); }
+.btn-outline:hover { background: var(--black); color: var(--cream); }
+.btn-outline:active { transform: translateY(1px); }
+ 
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+section { padding: var(--space-xl) 5%; }
+ 
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-lg);
+  border-bottom: 3px solid var(--black);
+  padding-bottom: var(--space-xs);
+}
+ 
+.section-head .tag { color: var(--gray); }
+ 
+/* =========================================================
+   PRODUCT GRID  (CSS Grid layout)
+   ========================================================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+ 
+.card {
+  border: 2px solid var(--black);
+  background: #fff;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+ 
+.card:hover {
+  box-shadow: 6px 6px 0 var(--black);
+  transform: translate(-3px, -3px);
+}
+ 
+.thumb {
+  aspect-ratio: 4 / 5;
+  background: repeating-linear-gradient(135deg, #eeece2, #eeece2 10px, #e4e2d8 10px, #e4e2d8 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-align: center;
+  padding: var(--space-sm);
+  border-bottom: 2px solid var(--black);
+}
+ 
+.card img { border-bottom: 2px solid var(--black); aspect-ratio: 4/5; object-fit: cover; width: 100%; }
+ 
+.card-body { padding: var(--space-sm); }
+.card-body h3 a:hover,
+.card-body h3 a:focus-visible { color: var(--gray); }
+.card-body .price { font-family: 'JetBrains Mono', monospace; color: var(--gray); margin-top: 0.25rem; }
+ 
+/* =========================================================
+   FILTERS
+   ========================================================= */
+.shop-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-lg);
+}
+ 
+.filters { border-right: 2px solid var(--line); padding-right: var(--space-md); }
+.filters h3 { font-family: 'Inter', sans-serif; text-transform: none; font-size: 0.95rem; font-weight: 700; margin: var(--space-md) 0 var(--space-xs); }
+.filters h3:first-child { margin-top: 0; }
+.filters label { display: block; font-size: 0.9rem; color: var(--gray); margin-bottom: 0.4rem; }
+.filters input:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+ 
+/* =========================================================
+   PRODUCT PAGE
+   ========================================================= */
+.product-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+ 
+.product-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.product-gallery .thumb:first-child,
+.product-gallery img:first-child { grid-column: 1 / -1; aspect-ratio: 4/3; }
+.product-gallery img { border: 2px solid var(--black); object-fit: cover; width: 100%; }
+ 
+.product-info h1 { font-size: var(--step-3); margin-bottom: 0.25rem; }
+.product-info .price { font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; margin-bottom: var(--space-md); }
+.product-info p.desc { color: var(--gray); margin-bottom: var(--space-md); max-width: 45ch; }
+ 
+.size-row { display: flex; gap: 0.6rem; margin-bottom: var(--space-md); }
+.size-row button {
+  width: 44px; height: 44px;
+  border: 2px solid var(--black);
+  background: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.size-row button:hover { background: var(--yellow); }
+.size-row button:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+.size-row button[aria-pressed="true"] { background: var(--black); color: var(--yellow); }
+ 
+/* =========================================================
+   LOOKBOOK
+   ========================================================= */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+.editorial-grid .thumb { aspect-ratio: 3/4; }
+.editorial-grid .wide { grid-column: span 2; aspect-ratio: unset; }
+ 
+.hashtag-strip {
+  display: flex;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  padding-bottom: var(--space-xs);
+}
+.hashtag-strip .thumb { min-width: 160px; aspect-ratio: 1/1; flex: 0 0 auto; }
+ 
+/* =========================================================
+   ABOUT / CONTACT
+   ========================================================= */
+.about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: start; }
+.about-layout p { color: var(--gray); margin-bottom: var(--space-sm); max-width: 50ch; }
+.about-layout img { border: 2px solid var(--black); object-fit: cover; width: 100%; aspect-ratio: 4/3; }
+ 
+form.contact-form { display: grid; gap: var(--space-sm); }
+form.contact-form label { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; }
+form.contact-form input,
+form.contact-form textarea {
+  width: 100%;
+  border: 2px solid var(--black);
+  background: #fff;
+  padding: 0.7rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  transition: box-shadow 0.15s ease;
+}
+form.contact-form input:focus-visible,
+form.contact-form textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--yellow);
+}
+form.contact-form textarea { resize: vertical; min-height: 100px; }
+ 
+/* =========================================================
+   FOOTER
+   ========================================================= */
+footer.site-footer {
+  border-top: 3px solid var(--black);
+  padding: var(--space-lg) 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+ 
+footer.site-footer .footer-links { display: flex; gap: var(--space-md); }
+footer.site-footer a:hover,
+footer.site-footer a:focus-visible { color: var(--black); }
+ 
+/* =========================================================
+   3. RESPONSIVE DESIGN — BREAKPOINTS
+   Desktop:  > 1024px   (default styles above)
+   Tablet:   ≤ 1024px
+   Mobile:   ≤ 600px
+   ========================================================= */
+ 
+/* ---- Tablet ---- */
+@media (max-width: 1024px) {
+  .shop-layout,
+  .product-layout,
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+ 
+  .filters {
+    border-right: none;
+    border-bottom: 2px solid var(--line);
+    padding-right: 0;
+    padding-bottom: var(--space-md);
+  }
+ 
+  .editorial-grid { grid-template-columns: 1fr 1fr; }
+  .editorial-grid .wide { grid-column: 1 / -1; }
+ 
+  .hero { padding: var(--space-lg) 5% 3.5rem; }
+}
+ 
+/* ---- Mobile ---- */
+@media (max-width: 600px) {
+  nav.main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--cream);
+    border-bottom: 3px solid var(--black);
+    padding: var(--space-sm) 5%;
+  }
+ 
+  nav.main-nav.is-open { display: block; }
+ 
+  nav.main-nav ul {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+ 
+  .nav-toggle { display: flex; }
+ 
+  .nav-icons { gap: var(--space-sm); font-size: 0.75rem; }
+ 
+  .logo { font-size: var(--step-1); }
+ 
+  .grid { grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
+ 
+  .editorial-grid { grid-template-columns: 1fr; }
+  .editorial-grid .wide { grid-column: 1; }
+ 
+  .size-row button { width: 40px; height: 40px; }
+ 
+  footer.site-footer { flex-direction: column; align-items: flex-start; }
+}
+ 
+ 
+/* =========================================================
+   TOAST NOTIFICATIONS  (created by script.js)
+   ========================================================= */
+.toast-region {
+  position: fixed;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: min(380px, calc(100% - 2 * var(--space-md)));
+  pointer-events: none; /* only the toasts themselves catch clicks */
+}
+ 
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.85rem 1rem;
+  background: var(--black);
+  color: var(--cream);
+  border: 2px solid var(--black);
+  border-left: 8px solid var(--yellow);
+  box-shadow: 4px 4px 0 var(--yellow);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+ 
+.toast.is-visible { opacity: 1; transform: translateY(0); }
+ 
+.toast--success { border-left-color: var(--yellow); }
+.toast--error   { border-left-color: #e5484d; }
+.toast--info    { border-left-color: var(--gray); }
+ 
+.toast__message { flex: 1; }
+ 
+.toast__action,
+.toast__close {
+  background: transparent;
+  border: none;
+  color: var(--yellow);
+  font-family: inherit;
+  cursor: pointer;
+}
+ 
+.toast__action {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: underline;
+  padding: 0.25rem;
+}
+ 
+.toast__close { font-size: 1.25rem; line-height: 1; padding: 0 0.25rem; color: var(--cream); }
+ 
+.toast__action:hover,
+.toast__close:hover { color: var(--cream); }
+.toast__close:hover { color: var(--yellow); }
+ 
+.toast__action:focus-visible,
+.toast__close:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+ 
+/* Smaller button used for "Quick add" on product cards */
+.btn-small { padding: 0.5rem 1rem; font-size: 0.75rem; }
+.quick-add { margin-top: var(--space-sm); width: 100%; }
+ 
+/* Invalid form fields (set by script.js) */
+form.contact-form [aria-invalid="true"] {
+  border-color: #e5484d;
+  box-shadow: 0 0 0 3px rgba(229, 72, 77, 0.25);
+}
+ 
+@media (max-width: 600px) {
+  .toast-region {
+    right: 0;
+    left: 0;
+    bottom: var(--space-sm);
+    margin: 0 auto;
+  }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+ 
